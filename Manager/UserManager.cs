@@ -19,7 +19,7 @@ namespace BankApp.Manager
                 System.Console.WriteLine("user already exist");
                 return null;
             }
-           
+
             User user = new User(
                 UserDb.UserDatabase.Count + 1,
                 firstname,
@@ -41,6 +41,25 @@ namespace BankApp.Manager
                 }
             }
             return null;
+        }
+
+        public User? UpdateProfile(int userId, string newFirstname, string newLastname, string newEmail)
+        {
+            foreach (var user in UserDb.UserDatabase)
+            {
+                if (user.Id == userId)
+                {
+                    user.Firstname = newFirstname;
+                    user.Lastname = newLastname;
+                    user.Email = newEmail;
+                    return user;
+                }
+            }
+            return null;
+        }
+        public User? GetUserById(int userId)
+        {
+            return UserDb.UserDatabase.FirstOrDefault(u => u.Id == userId);
         }
         private bool Exist(string email)
         {
