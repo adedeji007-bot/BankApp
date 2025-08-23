@@ -9,68 +9,48 @@ namespace BankApp.Menu
 {
     public class UserMenu
     {
-        private readonly UserManager userManager = new UserManager();
-
-        public void Show()
-        {
-            bool cont = true;
-            while (cont)
-            {
-                Console.WriteLine("\n==== User Menu ====");
-                Console.WriteLine("1. View Profile");
-                Console.WriteLine("2. Update Profile");
-                Console.WriteLine("3. Logout");
-
-                Console.Write("Choose option: ");
-                string input = Console.ReadLine();
-                int opt;
-                if (!int.TryParse(input, out opt))
-                {
-                    Console.WriteLine("Invalid input. Please enter a number.");
-                    continue;
-                }
-
-                switch (opt)
-                {
-                    case 1:
-                        ViewProfile();
-                        break;
-
-                    case 2:
-                        UpdateProfile();
-                        break;
-
-                    case 3:
-                        cont = false;
-                        Console.WriteLine("Logging out...");
-                        break;
-
-                    default:
-                        Console.WriteLine("Invalid option. Try again.");
-                        break;
-                }
-            }
-        }
         private void UpdateProfile()
         {
-            Console.Write("New Firstname: ");
-            string newFirstname = Console.ReadLine() ?? "";
+            
+            var currentUser = UserDb.UserDatabase.FirstOrDefault(u => u.Id == User.LoggedInUserId);
 
-            Console.Write("New Lastname: ");
-            string newLastname = Console.ReadLine() ?? "";
+            if (currentUser == null)
+            {
+                Console.WriteLine("⚠️ User not found.");
+                return;
+            }
 
-            Console.Write("New Email: ");
-            string newEmail = Console.ReadLine() ?? "";
+            Console.WriteLine("\n--- Update Profile ---");
+            Console.WriteLine("Press Enter without typing anything to keep the current value.\n");
 
-            var updated = userManager.UpdateProfile(User.LoggedInUserId, newFirstname, newLastname, newEmail);
+            Console.Write($"New Firstname ({currentUser.Firstname}): ");
+            string newFirstname = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(newFirstname)) newFirstname = currentUser.Firstname;
+
+            Console.Write($"New Lastname ({currentUser.Lastname}): ");
+            string newLastname = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(newLastname)) newLastname = currentUser.Lastname;
+
+            Console.Write($"New Email ({currentUser.Email}): ");
+            string newEmail = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(newEmail)) newEmail = currentUser.Email;
+
+            var updated = userManager.UpdateProfile(
+                User.LoggedInUserId,
+                newFirstname,
+                newLastname,
+                newEmail
+            );
+
             if (updated != null)
             {
-                Console.WriteLine("✅ Profile updated successfully!");
+                Console.WriteLine("\n✅ Profile updated successfully!");
             }
             else
             {
-                Console.WriteLine("⚠️ Update failed. User not found.");
+                Console.WriteLine("\n⚠️ Update failed. User not found.");
             }
         }
+
     }
 }
