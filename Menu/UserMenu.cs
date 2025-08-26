@@ -1,17 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+using BankApp.Data;
 using BankApp.Entities;
+using BankApp.IServices;
 using BankApp.Manager;
 
 namespace BankApp.Menu
 {
     public class UserMenu
     {
+        private readonly IUserService _userService;
+        public UserMenu()
+        {
+            _userService = new UserManager();
+        }
         private void UpdateProfile()
         {
-            
+
             var currentUser = UserDb.UserDatabase.FirstOrDefault(u => u.Id == User.LoggedInUserId);
 
             if (currentUser == null)
@@ -35,7 +39,7 @@ namespace BankApp.Menu
             string newEmail = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(newEmail)) newEmail = currentUser.Email;
 
-            var updated = userManager.UpdateProfile(
+            var updated = _userService.UpdateProfile(
                 User.LoggedInUserId,
                 newFirstname,
                 newLastname,

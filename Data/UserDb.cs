@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BankApp.Entities;
 
-namespace Batch29ConsoleApp.Data
+namespace BankApp.Data
 {
     public static class  UserDb
     {

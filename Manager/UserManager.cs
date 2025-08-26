@@ -1,4 +1,5 @@
 
+using BankApp.Data;
 using BankApp.Entities;
 using BankApp.IServices;
 
@@ -6,12 +7,7 @@ namespace BankApp.Manager
 {
     public class UserManager : IUserService
     {
-        public User Register(
-        string firstname,
-        string lastname,
-        string email,
-        string password
-        )
+            public User Register(string firstname, string lastname, string email,string password )
         {
             bool userExists = Exist(email);
             if (userExists)
