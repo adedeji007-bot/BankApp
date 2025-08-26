@@ -1,4 +1,5 @@
 
+using bankApp.IRepository;
 using BankApp.Data;
 using BankApp.Entities;
 using BankApp.IServices;
@@ -7,7 +8,12 @@ namespace BankApp.Manager
 {
     public class UserManager : IUserService
     {
-            public User Register(string firstname, string lastname, string email,string password )
+        private readonly IUserRepository _userRepository;
+        public UserManager()
+        {
+            _userRepository = new UserDb();
+        }
+            public User Register(string firstname, string lastname, string email, string password)
         {
             bool userExists = Exist(email);
             if (userExists)
@@ -15,21 +21,22 @@ namespace BankApp.Manager
                 System.Console.WriteLine("user already exist");
                 return null;
             }
-
+                int id = _userRepository.Counter() + 1;
             User user = new User(
-                UserDb.UserDatabase.Count + 1,
+                id,
                 firstname,
                 lastname,
                 email,
                 password,
                 "Customer");
-            UserDb.UserDatabase.Add(user);
+            _userRepository.AddUser(user);
             return user;
         }
 
         public User? Login(string email, string password)
         {
-            foreach (var user in UserDb.UserDatabase)
+            var users = _userRepository.GetAllUsers();
+            foreach (var user in users)
             {
                 if (user.Email == email && user.Password == password)
                 {
@@ -41,7 +48,8 @@ namespace BankApp.Manager
 
         public User? UpdateProfile(int userId, string newFirstname, string newLastname, string newEmail)
         {
-            foreach (var user in UserDb.UserDatabase)
+             var users = _userRepository.GetAllUsers();
+            foreach (var user in users)
             {
                 if (user.Id == userId)
                 {
@@ -55,11 +63,12 @@ namespace BankApp.Manager
         }
         public User? GetUserById(int userId)
         {
-            return UserDb.UserDatabase.FirstOrDefault(u => u.Id == userId);
+            return _userRepository.GetUser(userId);
         }
         private bool Exist(string email)
         {
-            foreach (var user in UserDb.UserDatabase)
+             var users = _userRepository.GetAllUsers();
+            foreach (var user in users)
             {
                 if (user.Email == email)
                 {
