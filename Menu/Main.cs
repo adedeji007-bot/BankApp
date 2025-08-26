@@ -2,12 +2,18 @@
 using System.Text.RegularExpressions;
 using BankApp.Entities;
 using BankApp.Manager;
+using BankApp.IServices;
 
 namespace BankApp.Menu
 {
     public class Main
     {
-        UserManager userManager = new UserManager();
+        private readonly IUserService _userManager;
+        public Main()
+        {
+            _userManager = new UserManager();
+        }
+        
         public void MainMenu()
         {
             bool cont = true;
@@ -100,7 +106,7 @@ namespace BankApp.Menu
             password.Length < 8 || !password.Any(char.IsLower) || !password.Any(char.IsUpper) || !password.Any(char.IsDigit));
 
 
-            User? user = userManager.Register(firstName, lastName, email, password);
+            User? user = _userManager.Register(firstName, lastName, email, password);
 
             if (user != null)
             {
@@ -116,7 +122,7 @@ namespace BankApp.Menu
             Console.Write("Enter your password: ");
             string password = Console.ReadLine();
 
-            var user = userManager.Login(email, password);
+            var user = _userManager.Login(email, password);
 
             if (user == null)
             {

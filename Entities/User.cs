@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace BankApp.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
         public static int LoggedInUserId;
-        public int Id { get; set; }
         public string Firstname { get; set; } = default!;
         public string Lastname { get; set; } = default!;
         public string Email { get; set; } = default!;
@@ -22,9 +22,8 @@ namespace BankApp.Entities
                 string email,
                 string password,
                 string role
-        )
+        ): base(id)
         {
-            Id = id;
             Firstname = firstname;
             Lastname = lastname;
             Email = email;

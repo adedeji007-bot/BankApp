@@ -1,10 +1,10 @@
 
 using BankApp.Entities;
-using Batch29ConsoleApp.Data;
+using BankApp.IServices;
 
 namespace BankApp.Manager
 {
-    public class UserManager
+    public class UserManager : IUserService
     {
         public User Register(
         string firstname,
