@@ -157,5 +157,18 @@ namespace BankApp.Menu
                 Console.WriteLine($"ID: {user.Id}, Name: {user.Firstname} {user.Lastname}, Email: {user.Email}, Role: {user.Role}");
             }
         }
-
+        public void ViewAllProfiles()
+        {
+            var users = userManager.GetAllUsers();
+            if (users.Count == 0)
+            {
+                Console.WriteLine("No profiles found.");
+                return;
+            }
+            Console.WriteLine("All Profiles:");
+            foreach (var user in users)
+            {
+                Console.WriteLine($"ID: {user.Id}, Name: {user.Firstname} {user.Lastname}, Email: {user.Email}, Role: {user.Role}");
+            }
+        }
     }
