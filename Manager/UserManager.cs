@@ -77,8 +77,8 @@ namespace BankApp.Manager
             }
             return false;
         }
-        
-          public User ViewTransactions(int Id , int account)
+
+        public User ViewTransactions(int Id, int account)
         {
             var transactions = GetTransactions(Id, account);
 
@@ -90,5 +90,11 @@ namespace BankApp.Manager
                 Console.WriteLine($"Description: {transaction.Description}");
                 Console.WriteLine("------------------------");
             }
+        }
+        
+    public List<User> GetAllUsers()
+        {
+            return UserDb.UserDatabase;
+        }
     }
-}
+    }
