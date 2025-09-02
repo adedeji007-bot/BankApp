@@ -16,7 +16,7 @@ namespace BankApp.Menu
         private void UpdateProfile()
         {
 
-            var currentUser = UserDb.UserDatabase.FirstOrDefault(u => u.Id == User.LoggedInUserId);
+            var currentUser = _userService.GetUserById(User.LoggedInUserId);
 
             if (currentUser == null)
             {

@@ -1,11 +1,12 @@
 ﻿
 
 // git clone https://github.com/bayorh/BankApp.git
-using BankApp.Menu;
+// using BankApp.Menu;
 
-Console.WriteLine("Hello, World!");
+// Console.WriteLine("Hello, World!");
 
-Main main = new Main();
+// Main main = new Main();
 
 
-main.MainMenu();
+// main.MainMenu();
+

@@ -13,7 +13,7 @@ namespace BankApp.Manager
         {
             _userRepository = new UserDb();
         }
-            public User Register(string firstname, string lastname, string email, string password)
+        public User Register(string firstname, string lastname, string email, string password)
         {
             bool userExists = Exist(email);
             if (userExists)
@@ -21,7 +21,7 @@ namespace BankApp.Manager
                 System.Console.WriteLine("user already exist");
                 return null;
             }
-                int id = _userRepository.Counter() + 1;
+            int id = _userRepository.Counter() + 1;
             User user = new User(
                 id,
                 firstname,
@@ -48,7 +48,7 @@ namespace BankApp.Manager
 
         public User? UpdateProfile(int userId, string newFirstname, string newLastname, string newEmail)
         {
-             var users = _userRepository.GetAllUsers();
+            var users = _userRepository.GetAllUsers();
             foreach (var user in users)
             {
                 if (user.Id == userId)
@@ -67,7 +67,7 @@ namespace BankApp.Manager
         }
         private bool Exist(string email)
         {
-             var users = _userRepository.GetAllUsers();
+            var users = _userRepository.GetAllUsers();
             foreach (var user in users)
             {
                 if (user.Email == email)
