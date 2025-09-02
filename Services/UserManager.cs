@@ -77,5 +77,54 @@ namespace BankApp.Manager
             }
             return false;
         }
+
+        public User ViewTransactions(int Id, int account)
+        {
+            var transactions = GetTransactions(Id, account);
+
+            foreach (var transaction in transactions)
+            {
+                Console.WriteLine($"Transaction ID: {transaction.Id}");
+                Console.WriteLine($"Date: {transaction.Date}");
+                Console.WriteLine($"Amount: {transaction.Amount}");
+                Console.WriteLine($"Description: {transaction.Description}");
+                Console.WriteLine("------------------------");
+            }
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return UserDb.UserDatabase;
+        }
+
+        public void BuyAirtime()
+    {
+        Console.WriteLine("Choose Network Provider:");
+        Console.WriteLine("1. MTN");
+        Console.WriteLine("2. Airtel");
+        Console.WriteLine("3. Glo");
+        Console.WriteLine("4. 9mobile");
+        int choice = int.Parse(Console.ReadLine());
+
+        string[] providers = { "MTN", "Airtel", "Glo", "9mobile" };
+        string selectedProvider = providers[choice - 1];
+
+        Console.WriteLine("Enter Phone Number:");
+        string phoneNumber = Console.ReadLine();
+
+        Console.WriteLine("Enter Amount:");
+        double amount = double.Parse(Console.ReadLine());
+
+        if (Balance >= amount)
+        {
+            Balance -= amount;
+            Console.WriteLine($"Airtime purchase successful!");
+            Console.WriteLine($"Successfully bought {amount} for {phoneNumber} on {selectedProvider}.");
+        }
+        else
+        {
+            Console.WriteLine("Insufficient Funds. Please Top Up Your Account.");
+        }
+    }
     }
 }
